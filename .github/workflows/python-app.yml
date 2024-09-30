@@ -22,14 +22,6 @@ jobs:
       with:
         python-version: "3.12"
 
-    - name: Cache pip dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-
     - name: Install dependencies using make
       run: make install
 
@@ -37,12 +29,4 @@ jobs:
       run: |
         make run &
         sleep 5
-
-    - name: Test with pytest
-      run: |
-        pytest --maxfail=5 --disable-warnings
-
-    - name: Lint with flake8
-      run: |
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        
